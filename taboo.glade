@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Wed Oct  7 02:44:17 2009 -->
+<!--Generated with glade3 3.4.5 on Wed Oct  7 15:10:34 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="setup">
     <property name="visible">True</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <signal name="destroy" handler="gtk_main_quit"/>
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -26,7 +27,7 @@
               <widget class="GtkSpinButton" id="number">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="adjustment">4 1 25 1 10 10</property>
+                <property name="adjustment">4 1 25 1 10 0</property>
                 <property name="numeric">True</property>
               </widget>
               <packing>
@@ -55,7 +56,7 @@
               <widget class="GtkSpinButton" id="length">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="adjustment">2 1 5 1 10 10</property>
+                <property name="adjustment">2 1 5 1 10 0</property>
                 <property name="numeric">True</property>
               </widget>
               <packing>
@@ -120,6 +121,7 @@
                     <property name="height_request">200</property>
                     <property name="visible">True</property>
                     <property name="yalign">0.10000000149011612</property>
+                    <property name="use_markup">True</property>
                   </widget>
                   <packing>
                     <property name="position">2</property>
@@ -154,6 +156,7 @@
                     <property name="height_request">200</property>
                     <property name="visible">True</property>
                     <property name="yalign">0.10000000149011612</property>
+                    <property name="use_markup">True</property>
                   </widget>
                   <packing>
                     <property name="position">2</property>
@@ -233,6 +236,7 @@
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="has_separator">False</property>
+    <signal name="destroy" handler="gtk_main_quit"/>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -244,6 +248,7 @@
               <widget class="GtkLabel" id="whose_turn">
                 <property name="height_request">100</property>
                 <property name="visible">True</property>
+                <property name="use_markup">True</property>
               </widget>
             </child>
             <child>
@@ -399,6 +404,7 @@
   <widget class="GtkWindow" id="main_screen">
     <property name="title" translatable="yes">Taboo!</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <signal name="destroy" handler="gtk_main_quit"/>
     <child>
       <widget class="GtkVBox" id="vbox7">
         <property name="visible">True</property>
@@ -408,6 +414,7 @@
             <child>
               <widget class="GtkLabel" id="timer">
                 <property name="visible">True</property>
+                <property name="use_markup">True</property>
               </widget>
             </child>
             <child>
@@ -486,7 +493,6 @@
                 <property name="width_request">120</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="next_card"/>
                 <child>
