@@ -62,7 +62,7 @@ class Game():
     def show_card(self):
         result = self.cursor.execute("""SELECT word, keyword1, keyword2, keyword3, keyword4,
                                       keyword5 FROM cards WHERE id=?""", (self.cards.pop(),)).fetchone()
-        self.wTree.get_widget("card").set_text("\n".join(result))
+        self.wTree.get_widget("card").set_text(result[0] + "\n\n" + "\n".join(result[1:]))
     
     def next_card(self, button):
         if button.name == "success":

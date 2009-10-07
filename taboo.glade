@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Wed Oct  7 02:26:58 2009 -->
+<!--Generated with glade3 3.4.5 on Wed Oct  7 02:44:17 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="setup">
     <property name="visible">True</property>
@@ -468,11 +468,13 @@
         <child>
           <widget class="GtkLabel" id="card">
             <property name="visible">True</property>
-            <property name="label" translatable="yes">&lt;span size='20'&gt;sdsd&lt;/span&gt;</property>
+            <property name="label" translatable="yes">
+</property>
             <property name="use_markup">True</property>
             <property name="justify">GTK_JUSTIFY_CENTER</property>
           </widget>
           <packing>
+            <property name="padding">20</property>
             <property name="position">1</property>
           </packing>
         </child>
@@ -481,6 +483,7 @@
             <property name="visible">True</property>
             <child>
               <widget class="GtkButton" id="success">
+                <property name="width_request">120</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -498,7 +501,8 @@
                     <child>
                       <widget class="GtkLabel" id="label9">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Great Success!</property>
+                        <property name="label" translatable="yes">Great 
+Success!</property>
                       </widget>
                       <packing>
                         <property name="position">1</property>
@@ -510,6 +514,7 @@
             </child>
             <child>
               <widget class="GtkButton" id="pass">
+                <property name="width_request">100</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -542,6 +547,7 @@
             </child>
             <child>
               <widget class="GtkButton" id="button4">
+                <property name="width_request">120</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -559,7 +565,8 @@
                     <child>
                       <widget class="GtkLabel" id="label15">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Stupid (Delete)</property>
+                        <property name="label" translatable="yes">Stupid 
+(Delete)</property>
                       </widget>
                       <packing>
                         <property name="position">1</property>
