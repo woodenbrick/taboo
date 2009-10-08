@@ -189,12 +189,9 @@ class Game():
         gtk.main_quit()
         
     def on_key_press(self, widget, key):
-        esc = 65307
-        end = 65367
-        backspace = 65288
-        if key.keyval == esc or key.keyval == end:
-            #taboo
-            self.next_card(self.wTree.get_widget("taboo"))
+        key_dic = { 65307 : "taboo", 65367 : "taboo",
+                   65288 : "pass"}
+        self.next_card(self.wTree.get_widget(keydic[key.keyval]))
         print key.keyval
     
     
