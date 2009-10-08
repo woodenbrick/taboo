@@ -14,10 +14,10 @@ class Game():
         self.wTree.signal_autoconnect(self)
         self.team_a = Team()
         self.team_b = Team()
-        #max = self.cursor.execute("select max(rowid) from cards").fetchone()[0]
-        #self.cards = range(1,max+1)
         self.cards = self.card_generator()
-        #random.shuffle(self.cards)
+        #movable scorepad
+        self.score_frame_a = self.wTree.get_widget("teama_frame")
+        self.score_frame_b = self.wTree.get_widget("teamb_frame")
     
     def on_name_added(self, entrybox):
         new_player = entrybox.get_text().strip()
@@ -47,11 +47,16 @@ class Game():
         self.pass_lose = self.wTree.get_widget("pass_lose").get_active()
         self.wTree.get_widget("whose_turn").set_markup(
             """It's <big>%s's</big> turn.""" % self.team_a.members[self.team_a.turn])
+        self.wTree.get_widget("teama_label").set_markup(
+            "<b>Team A</b><span size='10000'>\n%s</span>" % "\n".join(self.team_a.members))
+        self.wTree.get_widget("teamb_label").set_markup(
+            "<b>Team B</b><span size='10000'>\n%s</span>" % "\n".join(self.team_b.members))
         self.wTree.get_widget("wait_screen").show()
 
 
     def on_start_clicked(self, button):
         self.wTree.get_widget("wait_screen").hide()
+        self.place_scoreboard("scorebox_wait", "scorebox")
         self.temp_score = 0
         self.update_timer()
         gobject.timeout_add(1000, self.update_timer)
@@ -76,6 +81,10 @@ class Game():
             self.temp_score += 1
         elif button.name == "taboo" or button.name == "pass" and self.pass_lose:
             self.temp_score -= 1
+            self.wTree.get_widget("card").set_markup("<span size='20000' color='red'><u>Taboo!</u></span>")            
+            while gtk.events_pending():
+                gtk.main_iteration()
+            time.sleep(0.5)
         else:
             self.cursor.execute("""DELETE FROM cards where word=? and keyword1=? and keyword2=?""",
                                 (self.result[0], self.result[1], self.result[2]))
@@ -83,11 +92,9 @@ class Game():
                                 (?, ?, ?)""", (self.result[0], self.result[1], self.result[2]))
             self.conn.commit()
         if self.new_round:
-            self.wTree.get_widget("team_a_score2").set_text(str(self.temp_score +
-                                                                self.team_a.score))
+            self.wTree.get_widget("teama_score").set_markup("<span size='20000'>%d</span>" % (self.temp_score + self.team_a.score))
         else:
-            self.wTree.get_widget("team_b_score2").set_text(str(self.temp_score +
-                                                                self.team_b.score))
+            self.wTree.get_widget("teamb_score").set_markup("<span size='20000'>%d</span>" % (self.temp_score + self.team_b.score))
         self.show_card()
         
     def update_timer(self):
@@ -108,17 +115,23 @@ class Game():
         self.time_passed += 1
         return True
     
+    def place_scoreboard(self, cur, new):
+        self.wTree.get_widget(cur).remove(self.score_frame_a)
+        self.wTree.get_widget(cur).remove(self.score_frame_b)
+        self.wTree.get_widget(new).pack_start(self.score_frame_a, False)
+        self.wTree.get_widget(new).pack_start(self.score_frame_b, False)
+    
     def end_round(self):
         penalty = " No penalty as you had less than 10 seconds for this card." if self.ten_second_counter < 11 and self.pass_lose is False else ""
         popup = gtk.MessageDialog(None, gtk.DIALOG_MODAL,
-        gtk.MESSAGE_INFO, """Did you get the last card correct? (Word was %s.%s)\n""" % (self.result[0], penalty))
+        gtk.MESSAGE_INFO, gtk.BUTTONS_NONE, """Did you get the last card correct? (Word was %s.%s)\n""" % (self.result[0], penalty))
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_YES, gtk.ICON_SIZE_BUTTON)
         popup.add_button("Great Success", gtk.RESPONSE_YES).set_image(image)
         image = gtk.Image()
         #xxx need to remove penalty if not relevant and fix button icons
         image.set_from_stock(gtk.STOCK_REDO, gtk.ICON_SIZE_BUTTON)
-        popup.add_button("Failed", gtk.RESPONSE_REJECT).set_image(image)
+        popup.add_button("Failed", gtk.RESPONSE_NO).set_image(image)
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_CANCEL, gtk.ICON_SIZE_BUTTON)
         popup.add_button("Taboo", gtk.RESPONSE_REJECT).set_image(image)
@@ -144,11 +157,9 @@ class Game():
         self.wTree.get_widget("whose_turn").set_markup(
             """%s\nIt's <big>%s's</big> turn.""" % (score_str,
                                                     self.current_team.members[self.current_team.turn]))
-        
-        self.wTree.get_widget("team_a_score").set_text(str(self.team_a.score))
-        self.wTree.get_widget("team_b_score").set_text(str(self.team_b.score))
-        self.wTree.get_widget("team_a_score2").set_text(str(self.team_a.score))
-        self.wTree.get_widget("team_b_score2").set_text(str(self.team_b.score))
+        self.place_scoreboard("scorebox", "scorebox_wait")
+        self.wTree.get_widget("teama_score").set_markup("<span size='20000'>%d</span>" % self.team_a.score)
+        self.wTree.get_widget("teamb_score").set_markup("<span size='20000'>%d</span>" % self.team_b.score)
         if self.num_of_rounds != self.round:
             self.time_passed = 0    
         else:
@@ -190,11 +201,22 @@ class Game():
         
     def on_key_press(self, widget, key):
         key_dic = { 65307 : "taboo", 65367 : "taboo",
-                   65288 : "pass"}
-        self.next_card(self.wTree.get_widget(keydic[key.keyval]))
-        print key.keyval
+                   65288 : "pass", 65535 : "stupid"}
+        if key.keyval in key_dic:
+            self.next_card(self.wTree.get_widget(key_dic[key.keyval]))
     
-    
+    def shuffle_teams(self, widget):
+        all_players = self.team_a.members + self.team_b.members
+        self.team_a.members = []
+        self.team_b.members = []
+        random.shuffle(all_players)
+        for i, player in enumerate(all_players):
+            if i % 2 == 0:
+                self.team_a.add_member(player, self.wTree.get_widget("team_a_list"))
+            else:
+                self.team_b.add_member(player, self.wTree.get_widget("team_b_list"))
+
+        
 class Team(object):
     def __init__(self):
         self.turn = 0
