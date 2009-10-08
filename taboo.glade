@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Wed Oct  7 15:10:34 2009 -->
+<!--Generated with glade3 3.4.5 on Thu Oct  8 14:37:11 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="setup">
     <property name="visible">True</property>
@@ -82,6 +82,22 @@
           </packing>
         </child>
         <child>
+          <widget class="GtkCheckButton" id="pass_lose">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="label" translatable="yes">Passing cards loses a point</property>
+            <property name="xalign">1</property>
+            <property name="response_id">0</property>
+            <property name="draw_indicator">True</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">5</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
           <widget class="GtkLabel" id="label14">
             <property name="visible">True</property>
             <property name="label" translatable="yes">Enter the names of your team members. Teams do not have to be of equal size.</property>
@@ -89,7 +105,7 @@
           </widget>
           <packing>
             <property name="padding">5</property>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -170,7 +186,7 @@
             </child>
           </widget>
           <packing>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
         <child>
@@ -178,12 +194,13 @@
             <property name="visible">True</property>
           </widget>
           <packing>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <child>
           <widget class="GtkHBox" id="hbox4">
             <property name="visible">True</property>
+            <property name="homogeneous">True</property>
             <child>
               <widget class="GtkButton" id="button1">
                 <property name="visible">True</property>
@@ -209,6 +226,15 @@
                 <property name="position">1</property>
               </packing>
             </child>
+          </widget>
+          <packing>
+            <property name="position">6</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkHBox" id="hbox12">
+            <property name="visible">True</property>
+            <property name="homogeneous">True</property>
             <child>
               <widget class="GtkButton" id="button3">
                 <property name="visible">True</property>
@@ -219,13 +245,42 @@
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="on_clear_clicked"/>
               </widget>
+            </child>
+            <child>
+              <widget class="GtkButton" id="button4">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="response_id">0</property>
+                <signal name="clicked" handler="shuffle_teams"/>
+                <child>
+                  <widget class="GtkHBox" id="hbox16">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkImage" id="image7">
+                        <property name="visible">True</property>
+                        <property name="stock">gtk-refresh</property>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label7">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Shuffle teams</property>
+                      </widget>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
               <packing>
-                <property name="position">2</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </widget>
           <packing>
-            <property name="position">5</property>
+            <property name="position">7</property>
           </packing>
         </child>
       </widget>
@@ -234,6 +289,8 @@
   <widget class="GtkDialog" id="wait_screen">
     <property name="border_width">5</property>
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="default_width">300</property>
+    <property name="default_height">300</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="has_separator">False</property>
     <signal name="destroy" handler="gtk_main_quit"/>
@@ -252,52 +309,94 @@
               </widget>
             </child>
             <child>
-              <widget class="GtkHBox" id="hbox6">
+              <widget class="GtkVBox" id="scorebox_wait">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkVBox" id="vbox5">
-                    <property name="width_request">100</property>
-                    <property name="height_request">100</property>
+                  <widget class="GtkFrame" id="teama_frame">
                     <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_ETCHED_OUT</property>
                     <child>
-                      <widget class="GtkLabel" id="label7">
+                      <widget class="GtkHBox" id="hbox17">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Team A&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
+                        <child>
+                          <widget class="GtkLabel" id="teama_label">
+                            <property name="width_request">70</property>
+                            <property name="visible">True</property>
+                            <property name="use_markup">True</property>
+                            <property name="wrap">True</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkVSeparator" id="vseparator2">
+                            <property name="visible">True</property>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="teama_score">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">&lt;span size='20000'&gt;0&lt;/span&gt;</property>
+                            <property name="use_markup">True</property>
+                          </widget>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
                       </widget>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="team_a_score">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">0</property>
-                      </widget>
+                      <placeholder/>
                       <packing>
-                        <property name="position">1</property>
+                        <property name="type">label_item</property>
                       </packing>
                     </child>
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkVBox" id="vbox6">
-                    <property name="width_request">100</property>
-                    <property name="height_request">100</property>
+                  <widget class="GtkFrame" id="teamb_frame">
                     <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_ETCHED_OUT</property>
                     <child>
-                      <widget class="GtkLabel" id="label8">
+                      <widget class="GtkHBox" id="hbox6">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Team B&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                        <property name="use_underline">True</property>
+                        <child>
+                          <widget class="GtkLabel" id="teamb_label">
+                            <property name="width_request">70</property>
+                            <property name="visible">True</property>
+                            <property name="use_markup">True</property>
+                            <property name="wrap">True</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkVSeparator" id="vseparator1">
+                            <property name="visible">True</property>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="teamb_score">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">&lt;span size='20000'&gt;0&lt;/span&gt;</property>
+                            <property name="use_markup">True</property>
+                          </widget>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
                       </widget>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="team_b_score">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">0</property>
-                      </widget>
+                      <placeholder/>
                       <packing>
-                        <property name="position">1</property>
+                        <property name="type">label_item</property>
                       </packing>
                     </child>
                   </widget>
@@ -402,8 +501,10 @@
     </child>
   </widget>
   <widget class="GtkWindow" id="main_screen">
+    <property name="width_request">500</property>
     <property name="title" translatable="yes">Taboo!</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <signal name="key_press_event" handler="on_key_press"/>
     <signal name="destroy" handler="gtk_main_quit"/>
     <child>
       <widget class="GtkVBox" id="vbox7">
@@ -418,52 +519,13 @@
               </widget>
             </child>
             <child>
-              <widget class="GtkHBox" id="hbox12">
+              <widget class="GtkVBox" id="scorebox">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkVBox" id="vbox8">
-                    <property name="visible">True</property>
-                    <child>
-                      <widget class="GtkLabel" id="label11">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Team A&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label12">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">&lt;b&gt;Team B&lt;/b&gt;</property>
-                        <property name="use_markup">True</property>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </widget>
+                  <placeholder/>
                 </child>
                 <child>
-                  <widget class="GtkVBox" id="vbox9">
-                    <property name="visible">True</property>
-                    <child>
-                      <widget class="GtkLabel" id="team_a_score2">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">0</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="team_b_score2">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">0</property>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
+                  <placeholder/>
                 </child>
               </widget>
               <packing>
@@ -474,6 +536,7 @@
         </child>
         <child>
           <widget class="GtkLabel" id="card">
+            <property name="height_request">200</property>
             <property name="visible">True</property>
             <property name="label" translatable="yes">
 </property>
@@ -486,103 +549,150 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkHBox" id="hbox7">
+          <widget class="GtkVBox" id="vbox10">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkButton" id="success">
-                <property name="width_request">120</property>
+              <widget class="GtkHBox" id="hbox7">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="response_id">0</property>
-                <signal name="clicked" handler="next_card"/>
+                <property name="homogeneous">True</property>
                 <child>
-                  <widget class="GtkHBox" id="hbox9">
+                  <widget class="GtkButton" id="success">
+                    <property name="width_request">120</property>
                     <property name="visible">True</property>
+                    <property name="response_id">0</property>
+                    <signal name="clicked" handler="next_card"/>
                     <child>
-                      <widget class="GtkImage" id="image2">
+                      <widget class="GtkHBox" id="hbox9">
                         <property name="visible">True</property>
-                        <property name="stock">gtk-yes</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label9">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Great 
+                        <child>
+                          <widget class="GtkImage" id="image2">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-yes</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label9">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Great 
 Success!</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
                       </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                   </widget>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="pass">
+                    <property name="width_request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip_text">Hotkey: Backspace</property>
+                    <property name="response_id">0</property>
+                    <signal name="clicked" handler="next_card"/>
+                    <child>
+                      <widget class="GtkHBox" id="hbox10">
+                        <property name="visible">True</property>
+                        <child>
+                          <widget class="GtkImage" id="image3">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-redo</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label10">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Pass</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </widget>
             </child>
             <child>
-              <widget class="GtkButton" id="pass">
-                <property name="width_request">100</property>
+              <widget class="GtkHBox" id="hbox8">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="response_id">0</property>
-                <signal name="clicked" handler="next_card"/>
+                <property name="homogeneous">True</property>
                 <child>
-                  <widget class="GtkHBox" id="hbox10">
+                  <widget class="GtkButton" id="taboo">
+                    <property name="width_request">100</property>
                     <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip_text">Hotkeys: Esc or End</property>
+                    <property name="response_id">0</property>
+                    <signal name="clicked" handler="next_card"/>
                     <child>
-                      <widget class="GtkImage" id="image3">
+                      <widget class="GtkHBox" id="hbox15">
                         <property name="visible">True</property>
-                        <property name="stock">gtk-stop</property>
+                        <child>
+                          <widget class="GtkImage" id="image6">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-cancel</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label16">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Taboo!</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
                       </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label10">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Pass</property>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
                     </child>
                   </widget>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="stupid">
+                    <property name="width_request">120</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip_text">Hotkey: Delete</property>
+                    <property name="response_id">0</property>
+                    <signal name="clicked" handler="next_card"/>
+                    <child>
+                      <widget class="GtkHBox" id="hbox14">
+                        <property name="visible">True</property>
+                        <child>
+                          <widget class="GtkImage" id="image5">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-clear</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label15">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Stupid 
+(Delete)</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </widget>
               <packing>
                 <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkButton" id="button4">
-                <property name="width_request">120</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="response_id">0</property>
-                <signal name="clicked" handler="next_card"/>
-                <child>
-                  <widget class="GtkHBox" id="hbox14">
-                    <property name="visible">True</property>
-                    <child>
-                      <widget class="GtkImage" id="image5">
-                        <property name="visible">True</property>
-                        <property name="stock">gtk-clear</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label15">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Stupid 
-(Delete)</property>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="position">2</property>
               </packing>
             </child>
           </widget>
