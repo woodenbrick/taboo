@@ -8,7 +8,7 @@ import pango
 class Game():
     
     def __init__(self):
-        self.wTree = gtk.glade.XML("taboo.glade")
+        self.wTree = gtk.glade.XML("main.glade")
         self.conn = sqlite3.Connection("tabooDB")
         self.cursor = self.conn.cursor()
         self.wTree.signal_autoconnect(self)
