@@ -5,6 +5,8 @@ import time
 import gobject
 import random
 import pango
+from crossplatformsound import SoundPlayer
+
 class Game():
     
     def __init__(self):
@@ -18,6 +20,7 @@ class Game():
         #movable scorepad
         self.score_frame_a = self.wTree.get_widget("teama_frame")
         self.score_frame_b = self.wTree.get_widget("teamb_frame")
+        self.soundplayer = SoundPlayer()
     
     def on_name_added(self, entrybox):
         new_player = entrybox.get_text().strip()
@@ -101,8 +104,11 @@ class Game():
         time_since = self.length_of_rounds * 60 - self.time_passed
         self.ten_second_counter += 1
         if time_since == 0:
+            self.soundplayer.play("sounds/Time_up.wav")
             self.end_round()
             return False
+        if time_since < 6:
+            self.soundplayer.play("sounds/Blip.wav")
         time_split = [int(time_since / 60), int(time_since % 60)]
         for i in range(0, 2):
             if time_split[i] == 0:
@@ -129,7 +135,6 @@ class Game():
         image.set_from_stock(gtk.STOCK_YES, gtk.ICON_SIZE_BUTTON)
         popup.add_button("Great Success", gtk.RESPONSE_YES).set_image(image)
         image = gtk.Image()
-        #xxx need to remove penalty if not relevant and fix button icons
         image.set_from_stock(gtk.STOCK_REDO, gtk.ICON_SIZE_BUTTON)
         popup.add_button("Failed", gtk.RESPONSE_NO).set_image(image)
         image = gtk.Image()
@@ -197,6 +202,7 @@ class Game():
         
     def gtk_main_quit(self, widget):
         self.conn.close()
+        self.soundplayer.close()
         gtk.main_quit()
         
     def on_key_press(self, widget, key):
