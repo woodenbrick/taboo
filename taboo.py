@@ -104,11 +104,11 @@ class Game():
         time_since = self.length_of_rounds * 60 - self.time_passed
         self.ten_second_counter += 1
         if time_since == 0:
-            self.soundplayer.play("sounds/Time_up.wav")
+            self.soundplayer.play("sounds/beep.wav")
             self.end_round()
             return False
         if time_since < 6:
-            self.soundplayer.play("sounds/Blip.wav")
+            self.soundplayer.play("sounds/click.wav")
         time_split = [int(time_since / 60), int(time_since % 60)]
         for i in range(0, 2):
             if time_split[i] == 0:
