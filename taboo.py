@@ -87,7 +87,7 @@ class Game():
             self.wTree.get_widget("card").set_markup("<span size='20000' color='red'><u>Taboo!</u></span>")            
             while gtk.events_pending():
                 gtk.main_iteration()
-            time.sleep(0.5)
+            self.soundplayer.play("sounds/squeezetoy.wav")
         else:
             self.cursor.execute("""DELETE FROM cards where word=? and keyword1=? and keyword2=?""",
                                 (self.result[0], self.result[1], self.result[2]))

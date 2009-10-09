@@ -1,4 +1,6 @@
+import threading
 from sys import platform
+
 if platform.startswith('win'):
     from winsound import PlaySound, SND_FILENAME, SND_ASYNC
 else:
@@ -18,6 +20,10 @@ class SoundPlayer(object):
             self.dsp = ossOpen('/dev/dsp','w')
     
     def play(self, filename):
+        thr = threading.Thread(target=self._play, args=(filename,))
+        thr.run()
+        
+    def _play(self, filename):
         if platform.startswith('win'):
             PlaySound(filename, SND_FILENAME|SND_ASYNC)
         else:
@@ -28,6 +34,10 @@ class SoundPlayer(object):
             s.close()
             self.dsp.write(data)
     
-    def close():
+    def close(self):
         if platform.find("linux") > -1:
             self.dsp.close()
+            
+if __name__ == "__main__":
+    x = SoundPlayer()
+    x.play("sounds/question.wav")
